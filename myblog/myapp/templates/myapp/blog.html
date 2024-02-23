@@ -12,6 +12,12 @@
  Published {{ post.publish }} by {{ post.author }}
  </p>
  {{ post.body|truncatewords:30|linebreaks }}
+ <p class="tags">Tags: {{ post.tags.all|join:", " }}</p>
  {% endfor %}
+ <form action="{% url 'myapp:posts_by_tag' %}" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Find">
+ </form>
  {% include "myapp/pagination.html" with page=posts %}
 {% endblock %}

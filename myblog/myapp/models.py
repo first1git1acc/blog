@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -22,6 +23,7 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=2,choices=Status.choices,default = Status.DRAFT)
     author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='blog_posts')#звязок багато до одного
+    tags = TaggableManager()
 
     objects = models.Manager() #менеджер за замовчуванням
     published = PublishedManager() #менеджер для виконання операцій із опублікованими постами
